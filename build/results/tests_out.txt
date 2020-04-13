@@ -4,10 +4,10 @@ Note: automatically using hardware breakpoints for read-only addresses.
 Running all tests..."
 
 "PINA: 0x01, 0x00, 0x01 => PORTB: 1, state: waitRise1"...
-	Expected WaitRise2 but got state:4
-	Expected WaitRise1 but got state:7"PINA: 0x00, 0x01, 0x00 => PORTB: 1, state: waitRise2"...
-	Expected WaitRise2 but got state:4"PINA: 0x00, 0x01, 0x00 => PORTB: 1, state: waitRise2"...
-	Expected WaitRise2 but got state:4
-	Expected WaitRise1 but got state:4
-	Expected WaitRise2 but got state:4======================================================
+	Expected waitRise2 but got state:4
+	Expected waitRise1 but got state:7"PINA: 0x00, 0x01, 0x00 => PORTB: 2, state: waitRise2"...
+	Expected waitRise2 but got state:4"PINA: 0x00, 0x01, 0x00 => PORTB: 2, state: waitRise2"...
+	Expected waitRise2 but got state:4
+	Expected waitRise1 but got state:4
+	Expected waitRise2 but got state:4======================================================
 Quitting: Remote doesn't know how to detach

@@ -44,44 +44,44 @@ test "PINA: 0x01, 0x00, 0x01 => PORTB: 1, state: waitRise1"
 set state = Init
 setPINA 0x01
 continue 5
-expect state WaitRise2
+expect state waitRise2
 setPINA 0x00
 continue 5 
-expect state WaitRise2
+expect state waitRise2
 setPINA 0x01
 continue 5
 expectPORTB 0x01
-expect state WaitRise1
+expect state waitRise1
 checkResult
 
 # Test sequence from Init: !A0, A0, !A0 => PORTB: 2
-test "PINA: 0x00, 0x01, 0x00 => PORTB: 1, state: waitRise2"
+test "PINA: 0x00, 0x01, 0x00 => PORTB: 2, state: waitRise2"
 set state = Init
 setPINA 0x00
 continue 5
-expect state WaitRise1
+expect state waitRise1
 setPINA 0x01
 continue 5
-expect state WaitRise2
+expect state waitRise2
 setPINA 0x00
 continue 5
 expectPORTB 0x02
-expect state WaitRise2
+expect state waitRise2
 checkResult
 
 # Test sequence from Init: A0, A0, A0 => PORTB: 2
-test "PINA: 0x00, 0x01, 0x00 => PORTB: 1, state: waitRise2"
+test "PINA: 0x00, 0x01, 0x00 => PORTB: 2, state: waitRise2"
 set state = Init
 setPINA 0x01
 continue 5
-expect state WaitRise2
+expect state waitRise2
 setPINA 0x01
 continue 5
-expect state WaitRise1
+expect state waitRise1
 setPINA 0x01
 continue 5
 expectPORTB 0x02
-expect state WaitRise2
+expect state waitRise2
 checkResult
 
 

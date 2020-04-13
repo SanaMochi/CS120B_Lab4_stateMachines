@@ -12,65 +12,65 @@
 #include "simAVRHeader.h"
 #endif
 
-enum States {Start, Init, WaitRise1, Switch1, WaitFall1, WaitRise2, Switch2, WaitFall2} state;
+enum States {start, Init, waitRise1, switch1, waitFall1, waitRise2, switch2, waitFall2} state;
 
       unsigned char tmpA = 0x00;
 //      unsigned char tmpB = 0x00;
 
 void Tick() {
 	switch(state) {
-		case Start:
+		case start:
 			state = Init;
 			break;
 		case Init:
-			state = WaitRise1;
+			state = waitRise1;
 			PORTB = 0x01;
 			break;
-		case WaitRise1:
+		case waitRise1:
 			if (!tmpA)
-				state = WaitRise1;
+				state = waitRise1;
 			else
-				state = Switch1;
+				state = switch1;
 			break;
-		case Switch1:
+		case switch1:
 			PORTB = 0x02;
-			state = WaitFall1;
+			state = waitFall1;
 			break;
-		case WaitFall1:
+		case waitFall1:
 			if (tmpA)
-				state = WaitFall1;
+				state = waitFall1;
 			else
-				state = WaitRise2;
+				state = waitRise2;
 			break;
-		case WaitRise2:
+		case waitRise2:
 			if (!tmpA)
-                                state = WaitRise2;
+                                state = waitRise2;
                         else
-                                state = Switch2;
+                                state = switch2;
                         break;
-		case Switch2:
+		case switch2:
 			PORTB = 0x01;
-			state = WaitFall2;
+			state = waitFall2;
 			break;
-		case WaitFall2:
+		case waitFall2:
 			if (tmpA)
-                                state = WaitFall2;
+                                state = waitFall2;
                         else
-                                state = WaitRise1;
+                                state = waitRise1;
                         break;
 		default:
 			PORTB = 0x01;
-			state = Start;
+			state = start;
 			break;
 	}
 	switch(state) {
 		case Init:
-		case WaitRise1:
-		case Switch1:
-		case WaitFall1:
-		case WaitRise2:
-		case Switch2:
-		case WaitFall2:
+		case waitRise1:
+		case switch1:
+		case waitFall1:
+		case waitRise2:
+		case switch2:
+		case waitFall2:
 			break;
 		default:
 			break;
@@ -85,7 +85,7 @@ int main(void) {
 
 //	unsigned char tmpA = 0x00;
 //	unsigned char tpmB = 0x00;
-	state = Start;
+	state = start;
 	PORTB = 0x00;
     while (1) {
 	tmpA = PINA;
