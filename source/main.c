@@ -29,7 +29,7 @@ void Tick() {
 		case waitRise1:
 			if (!tmpA)
 				state = waitRise1;
-			else
+			else if (tmpA == 0x01)
 				state = switch1;
 			break;
 		case switch1:
@@ -37,15 +37,15 @@ void Tick() {
 			state = waitFall1;
 			break;
 		case waitFall1:
-			if (tmpA)
+			if (tmpA == 0x01)
 				state = waitFall1;
-			else
+			else if (!tmpA)
 				state = waitRise2;
 			break;
 		case waitRise2:
 			if (!tmpA)
                                 state = waitRise2;
-                        else
+                        else if (tmpA == 0x01)
                                 state = switch2;
                         break;
 		case switch2:
@@ -53,7 +53,7 @@ void Tick() {
 			state = waitFall2;
 			break;
 		case waitFall2:
-			if (tmpA)
+			if (tmpA == 0x01)
                                 state = waitFall2;
                         else
                                 state = waitRise1;
