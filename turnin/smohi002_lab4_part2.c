@@ -55,7 +55,8 @@ void Tick() {
 			state = waitReset;
 			break;
 		case waitReset:
-			state = wait;
+			if (tmpA == 0x03) { state = waitReset;}
+			else {		    state = wait;}
                         break;
 		default:
 			PORTC = 0x07;
@@ -88,3 +89,4 @@ int main(void) {
     }
 //    return 1;
 }
+
