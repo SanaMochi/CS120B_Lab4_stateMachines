@@ -45,6 +45,7 @@ void Tick() {
 			if (PORTC == 0x09) { PORTC = 0x09;}
 			else { 		     PORTC++;}
 			state = waitInc;
+			break;
 		case waitInc:
 			if (tmpA == 0x01) {	 state = waitInc;}
                         else if (tmpA == 0x03) { state = reset;}

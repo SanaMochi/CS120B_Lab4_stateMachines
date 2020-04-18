@@ -78,7 +78,6 @@ continue 5
 expect state wait
 checkResult
 
-# Test sequence from Init: !A0, A0, !A0 => PORTB: 2
 test "PINA: 0x03 => PORTC: 0, state: wait"
 set state = Init
 setPINA 0x03
@@ -87,8 +86,24 @@ expect state waitReset
 expectPORTC 0x00
 checkResult
 
+test "PINA: 0x01 => PORTC: 8, state: waitInc"
+set state = Init
+setPINA 0x01
+continue 5
+expect state waitInc
+expectPORTC 0x08
+checkResult
+
+test "PINA: 0x02 => PORTC: 6, state: waitDec"
+set state = Init
+setPINA 0x02
+continue 5
+expect state waitDec
+expectPORTC 0x06
+checkResult
+
 # Test sequence from Init: A0, A0, A0 => PORTB: 2
-test "PINA: 0x01, 0x00, 0x01 => PORTB: 2, state: waitFall1"
+test "PINA: 0x02, 0x02, 0x03, 0x00 => PORTC: 0, state: waitDec"
 set state = Init
 setPINA 0x02
 continue 5
@@ -112,10 +127,10 @@ setPINA 0x00
 continue 5
 expectPORTC 0x00
 expect state wait
-#setPINA 0x00
-#continue 5
-#expectPORTB 0x01
-#expect state waitRise1
+setPINA 0x02
+continue 5
+expectPORTC 0x00
+expect state waitDec
 #setPINA 0x00
 #continue 5
 #expectPORTB 0x01
