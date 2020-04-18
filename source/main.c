@@ -62,7 +62,7 @@ void Tick() {
 			PORTB = 0x01;
 			state = start;
 			break;
-	}
+	};
 	switch(state) {
 		case Init:
 		case waitRise1:
@@ -74,7 +74,7 @@ void Tick() {
 			break;
 		default:
 			break;
-	}
+	};
 }
 
 int main(void) {

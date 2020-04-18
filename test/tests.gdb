@@ -40,49 +40,69 @@ echo Running all tests..."\n\n
 
 # Add tests below
 # Test sequence from Init: A0, !A0, A0 => PORTB: 1
-test "PINA: 0x01, 0x00, 0x01 => PORTB: 1, state: waitRise1"
+test "Full round with all paths tested => PORTB: 2, state: waitFall1"
 set state = Init
+setPINA 0x00
+continue 5
+expect state waitRise1
 setPINA 0x01
 continue 5
-expect state waitRise2
+expect state waitFall1
+expectPORTB 0x02
 setPINA 0x00
 continue 5 
 expect state waitRise2
+setPINA 0x00
+continue 5
+expect state waitRise2
 setPINA 0x01
 continue 5
+expect state waitFall2
 expectPORTB 0x01
+setPINA 0x01
+continue 5
+expect state waitFall2
+setPINA 0x00
+continue 5
 expect state waitRise1
+setPINA 0x00
+continue 5
+expect state waitRise1
+setPINA 0x01
+continue 5
+expect state waitFall1
+expectPORTB 0x02
 checkResult
 
 # Test sequence from Init: !A0, A0, !A0 => PORTB: 2
-test "PINA: 0x00, 0x01, 0x00 => PORTB: 2, state: waitRise2"
-set state = Init
-setPINA 0x00
-continue 5
-expect state waitRise1
-setPINA 0x01
-continue 5
-expect state waitRise2
-setPINA 0x00
-continue 5
-expectPORTB 0x02
-expect state waitRise2
-checkResult
+#test "PINA: 0x00, 0x01, 0x00 => PORTB: 2, state: waitRise2"
+#set state = Init
+#setPINA 0x00
+#continue 5
+#expect state waitRise1
+#setPINA 0x01
+#continue 5
+#expect state waitRise2
+#setPINA 0x00
+#continue 5
+#expectPORTB 0x02
+#expect state waitRise2
+#checkResult
 
 # Test sequence from Init: A0, A0, A0 => PORTB: 2
-test "PINA: 0x00, 0x01, 0x00 => PORTB: 2, state: waitRise2"
-set state = Init
-setPINA 0x01
-continue 5
-expect state waitRise2
-setPINA 0x01
-continue 5
-expect state waitRise1
-setPINA 0x01
-continue 5
-expectPORTB 0x02
-expect state waitRise2
-checkResult
+#test "PINA: 0x00, 0x01, 0x00 => PORTB: 2, state: waitRise2"
+#set state = Init
+#setPINA 0x01
+#continue 5
+#expect state waitRise2
+#setPINA 0x01
+#continue 5
+#expect state waitRise1
+#setPINA 0x01
+#continue 5
+#expectPORTB 0x02
+#expect state waitRise2
+#checkResult
 
 
 #test “cntA0 > 100 => PORTB: 0x0F”
