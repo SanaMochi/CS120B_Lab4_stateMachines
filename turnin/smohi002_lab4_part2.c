@@ -29,7 +29,7 @@ void Tick() {
 			if (tmpA == 0x00) {	 state = wait;}
 			else if (tmpA == 0x01) { state = inc;}
 			else if (tmpA == 0x02) { state = dec;}
-			else if (tmpA = 0x03) {  state = reset;}
+			else 		       {  state = reset;}
 			break;
 		case dec:
 			if (PORTC == 0x00) { PORTC = 0x00;}
