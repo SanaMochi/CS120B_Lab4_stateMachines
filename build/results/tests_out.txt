@@ -1,7 +1,7 @@
-Breakpoint 1 at 0x20e: file source/main.c, line 90.
+Breakpoint 1 at 0x20e: file source/main.c, line 84.
 Note: automatically using hardware breakpoints for read-only addresses.
 ======================================================
 Running all tests..."
 
-"Full round with all paths tested => PORTB: 2, state: waitFall1"...======================================================
+"Full round with all paths tested => PORTB: 2, state: waitFall1"..."PINA: 0x01 => PORTB: 2, state: waitRise2"..."PINA: 0x01, 0x00, 0x01 => PORTB: 2, state: waitRise2"...======================================================
 Quitting: Remote doesn't know how to detach

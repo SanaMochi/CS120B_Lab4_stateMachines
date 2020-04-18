@@ -14,13 +14,13 @@
 
 enum States {start, Init, waitRise1, switch1, waitFall1, waitRise2, switch2, waitFall2} state;
 
-      unsigned char tmpA = 0x00;
-//      unsigned char tmpB = 0x00;
+      unsigned char tmpA;
 
 void Tick() {
 	switch(state) {
 		case start:
 			state = Init;
+			PORTB = 0x01;
 			break;
 		case Init:
 			state = waitRise1;
@@ -64,16 +64,14 @@ void Tick() {
 			break;
 	};
 	switch(state) {
-		case Init:
-		case waitRise1:
-		case switch1:
-		case waitFall1:
-		case waitRise2:
-		case switch2:
-		case waitFall2:
-			break;
-		default:
-			break;
+		case Init:	break;
+		case waitRise1:	break;
+		case switch1:	break;
+		case waitFall1:	break;
+		case waitRise2:	break;
+		case switch2:	break;
+		case waitFall2:	break;
+		default:	break;
 	};
 }
 
@@ -81,16 +79,12 @@ int main(void) {
     /* Insert DDR and PORT initializations */
 	DDRA = 0x00; PORTA = 0xFF; //PORTA = input
 	DDRB = 0xFF; PORTB = 0x00; //PORTB = output
-    /* Insert your solution below */
 
-//	unsigned char tmpA = 0x00;
-//	unsigned char tpmB = 0x00;
 	state = start;
-	PORTB = 0x00;
     while (1) {
 	tmpA = PINA;
 	Tick();	
 
     }
-    return 1;
+//    return 1;
 }
