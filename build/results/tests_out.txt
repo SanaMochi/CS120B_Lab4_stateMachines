@@ -3,5 +3,5 @@ Note: automatically using hardware breakpoints for read-only addresses.
 ======================================================
 Running all tests..."
 
-"Full round with all paths tested => PORTB: 2, state: waitFall1"..."PINA: 0x03 => PORTC: 0, state: wait"..."PINA: 0x01 => PORTC: 8, state: waitInc"..."PINA: 0x02 => PORTC: 6, state: waitDec"..."PINA: 0x02, 0x02, 0x03, 0x00 => PORTC: 0, state: waitDec"...======================================================
+"All possible paths tested & increment on 0x09"..."PINA: 0x03 => PORTC: 0, state: wait"..."PINA: 0x01 => PORTC: 8, state: waitInc"..."PINA: 0x02 => PORTC: 6, state: waitDec"..."Decrement on 0x00"..."PINA: 0x00, 0x02, 0x00, 0x02, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01 => PORTC: 0x08, state: waitInc"..."PINA: 0x03, Inc to max => PORTC: 0x09, state: waitInc"...======================================================
 Quitting: Remote doesn't know how to detach
