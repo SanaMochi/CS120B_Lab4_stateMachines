@@ -1,20 +1,7 @@
-Breakpoint 1 at 0x29e: file source/main.c, line 106.
+Breakpoint 1 at 0x2e6: file source/main.c, line 100.
 Note: automatically using hardware breakpoints for read-only addresses.
 ======================================================
 Running all tests..."
 
-"Test Correct Combo"...
-	Expected waitFallY but got state:8
-	Expected 0x01 
-	PORTB '0x800025:	0x00
-
-	Expected waitFallY but got state:8
-	Expected 0x01 
-	PORTB '0x800025:	0x00
-"# then incorrect button"...
-	Expected wait but got state:9"Lock from inside: PINA: 0x80 => PORTB: 0"..."Incorrect combo: PINA: 0x01 => PORTB: 0"...
-	Expected waitFallFalse2 but got state:9
-	Expected waitFallFalse2 but got state:9
-	Expected wait but got state:10"PINA: 0x02 => PORTC: 6, state: waitDec"...test/tests.gdb:134: Error in sourced command file:
-No symbol "waitDec" in current context.
+"Test Correct Combo"..."# then incorrect button"..."Lock from inside: PINA: 0x80 => PORTB: 0"..."Incorrect combo: PINA: 0x01 => PORTB: 0"..."Unlock"...======================================================
 Quitting: Remote doesn't know how to detach
