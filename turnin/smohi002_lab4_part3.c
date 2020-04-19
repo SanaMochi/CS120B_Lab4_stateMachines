@@ -41,16 +41,16 @@ void Tick() {
 			else {					 state = waitRise;}
 			break;
 		case y:
-			PORTB = 0x01;
-			state = waitFallY;
+/*			PORTB = 0x01;
+*/			state = waitFallY;
 			break;
 		case waitFallY:
-			if (tmpA == 0x00) { state = wait;}
-			else {	     state = waitFallY;}
+			if (tmpA == 0x00) {  state = wait;}
+			else {		     state = waitFallY;}
 			break;
 		case lock:
-			PORTB = 0x00;
-			state = waitFallLock;
+/*			PORTB = 0x00;
+*/			state = waitFallLock;
 			break;
 		case waitFallLock:
 			if (tmpA == 0x00) { state = wait;}
@@ -79,9 +79,9 @@ void Tick() {
 		case wait:			break;
 		case waitFall:			break;
 		case waitRise:			break;
-		case y:		/*PORTB = 0x01;*/	break;
+		case y:		PORTB = 0x01;	break;
 		case waitFallY:			break;
-		case lock:	/*PORTB = 0x00;*/	break;
+		case lock:	PORTB = 0x00;	break;
 		case waitFallLock:		break;
 		case waitFallFalse:		break;
 		case waitRiseFalse:		break;
