@@ -70,12 +70,15 @@ checkResult
 #Test 2
 test "# then incorrect button"
 set state = Init
+#expectPORTB 0x00
 setPINA 0x04
 continue 5
+expectPORTB 0x00
 expect state waitFall
 setPINA 0x00
 continue 5
 expect state waitRise
+expectPORTB 0x00
 setPINA 0x01
 continue 5
 expect state waitFallY
@@ -83,6 +86,7 @@ expectPORTB 0x00
 setPINA 0x00
 continue 5
 expect state wait
+expectPORTB 0x00
 checkResult
 
 #Test 3
