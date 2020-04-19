@@ -67,13 +67,14 @@ void Tick() {
 			else {		    state = waitFallFalse2;}
 			break;
 		default:
+			PORTB = 0x00;
 			state = start;
 			break;
 	};
 	switch(state) {
 		case start:		break;
 		case Init:
-			PORTB = 0x00;
+//			PORTB = 0x00;
 					break;
 		case wait:		break;
 		case waitFall:		break;
@@ -90,7 +91,7 @@ void Tick() {
 		case waitRiseFalse:	break;
 		case waitFallFalse2:	break;
 		default:
-			PORTB = 0x00;
+//			PORTB = 0x00;
 					break;
 	};
 }
@@ -109,4 +110,3 @@ int main(void) {
     }
 //    return 1;
 }
-

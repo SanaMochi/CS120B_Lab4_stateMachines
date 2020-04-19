@@ -67,10 +67,9 @@ continue 5
 expect state wait
 checkResult
 
-#Test 2
+# Test 2
 test "# then incorrect button"
 set state = Init
-#expectPORTB 0x00
 setPINA 0x04
 continue 5
 expectPORTB 0x00
@@ -89,7 +88,7 @@ expect state wait
 expectPORTB 0x00
 checkResult
 
-#Test 3
+# Test 3
 test "Lock from inside: PINA: 0x80 => PORTB: 0"
 set state = Init
 setPINA 0x80
@@ -132,7 +131,7 @@ expect state wait
 expectPORTB 0x00
 checkResult
 
-#Test 5
+# Test 5
 test "Unlock"
 set state = Init
 setPINA 0x04

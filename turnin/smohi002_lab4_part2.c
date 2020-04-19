@@ -32,8 +32,6 @@ void Tick() {
 			else 		       {  state = reset;}
 			break;
 		case dec:
-//			if (PORTC == 0x00) { PORTC = 0x00;}
-//			else {		     PORTC--;}
 			state = waitDec;
 			break;
 		case waitDec:
@@ -42,8 +40,6 @@ void Tick() {
 			else {			 state = wait;}
 			break;
 		case inc:
-//			if (PORTC == 0x09) { PORTC = 0x09;}
-//			else { 		     PORTC++;}
 			state = waitInc;
 			break;
 		case waitInc:
@@ -52,7 +48,6 @@ void Tick() {
 			else { 			 state = wait;}
                         break;
 		case reset:
-//			PORTC = 0x00;
 			state = waitReset;
 			break;
 		case waitReset:

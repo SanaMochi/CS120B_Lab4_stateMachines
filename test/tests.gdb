@@ -38,8 +38,7 @@ echo Running all tests..."\n\n
 # Check pass/fail
 #checkResult
 
-# Add tests below
-#Test 1
+# Test 1
 test "All possible paths tested & increment on 0x09"
 set state = Init
 setPINA 0x00
@@ -188,7 +187,7 @@ expectPORTC 0x08
 expect state wait
 checkResult
 
-#Test 7
+# Test 7
 test "PINA: 0x03, Inc to max => PORTC: 0x09, state: waitInc"
 setPINA 0x03
 continue 5
@@ -268,7 +267,6 @@ continue 5
 expectPORTC 0x09
 expect state wait
 checkResult
-
 
 #test “cntA0 > 100 => PORTB: 0x0F”
 #set exampleTick::cntA0 = 101
