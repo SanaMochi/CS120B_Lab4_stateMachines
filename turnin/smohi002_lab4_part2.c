@@ -1,7 +1,7 @@
 /*	Author: smohi002
  *  Partner(s) Name: 
  *	Lab Section:25
- *	Assignment: Lab #4  Exercise #1
+ *	Assignment: Lab #4  Exercise #3
  *	Exercise Description: [optional - include for your own benefit]
  *
  *	I acknowledge all content contained herein, excluding template or example
@@ -32,8 +32,8 @@ void Tick() {
 			else 		       {  state = reset;}
 			break;
 		case dec:
-			if (PORTC == 0x00) { PORTC = 0x00;}
-			else {		     PORTC--;}
+//			if (PORTC == 0x00) { PORTC = 0x00;}
+//			else {		     PORTC--;}
 			state = waitDec;
 			break;
 		case waitDec:
@@ -42,8 +42,8 @@ void Tick() {
 			else {			 state = wait;}
 			break;
 		case inc:
-			if (PORTC == 0x09) { PORTC = 0x09;}
-			else { 		     PORTC++;}
+//			if (PORTC == 0x09) { PORTC = 0x09;}
+//			else { 		     PORTC++;}
 			state = waitInc;
 			break;
 		case waitInc:
@@ -52,7 +52,7 @@ void Tick() {
 			else { 			 state = wait;}
                         break;
 		case reset:
-			PORTC = 0x00;
+//			PORTC = 0x00;
 			state = waitReset;
 			break;
 		case waitReset:
@@ -65,15 +65,15 @@ void Tick() {
 			break;
 	};
 	switch(state) {
-		case Init:	break;
-		case wait:	break;
-		case dec:	break;
-		case waitDec:	break;
-		case inc:	break;
-		case waitInc:	break;
-		case reset:	break;
-		case waitReset:	break;
-		default:	break;
+		case Init:	/* PORTC = 0x07;*/		break;
+		case wait:					break;
+		case dec:	if (PORTC != 0x00) {PORTC--;}	break;
+		case waitDec:					break;
+		case inc:	if (PORTC != 0x09) {PORTC++;}	break;
+		case waitInc:					break;
+		case reset:	PORTC = 0x00;			break;
+		case waitReset:					break;
+		default:	/*PORTC = 0x07;	*/		break;
 	};
 }
 
@@ -90,4 +90,3 @@ int main(void) {
     }
 //    return 1;
 }
-

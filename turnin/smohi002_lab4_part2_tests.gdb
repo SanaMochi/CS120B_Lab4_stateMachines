@@ -39,6 +39,7 @@ echo Running all tests..."\n\n
 #checkResult
 
 # Add tests below
+#Test 1
 test "All possible paths tested & increment on 0x09"
 set state = Init
 setPINA 0x00
@@ -77,6 +78,7 @@ continue 5
 expect state wait
 checkResult
 
+# Test 2
 test "PINA: 0x03 => PORTC: 0, state: wait"
 set state = Init
 setPINA 0x03
@@ -85,6 +87,7 @@ expect state waitReset
 expectPORTC 0x00
 checkResult
 
+# Test 3
 test "PINA: 0x01 => PORTC: 8, state: waitInc"
 set state = Init
 setPINA 0x01
@@ -93,6 +96,7 @@ expect state waitInc
 expectPORTC 0x08
 checkResult
 
+# Test 4
 test "PINA: 0x02 => PORTC: 6, state: waitDec"
 set state = Init
 setPINA 0x02
@@ -101,7 +105,7 @@ expect state waitDec
 expectPORTC 0x06
 checkResult
 
-# Test sequence from Init: A0, A0, A0 => PORTB: 2
+# Test 5
 test "Decrement on 0x00"
 set state = Init
 setPINA 0x02
@@ -140,6 +144,7 @@ expect state waitDec
 #expect state waitFall1
 checkResult
 
+# Test 6
 test "PINA: 0x00, 0x02, 0x00, 0x02, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01 => PORTC: 0x08, state: waitInc"
 set state = Init
 setPINA 0x00
@@ -183,6 +188,7 @@ expectPORTC 0x08
 expect state wait
 checkResult
 
+#Test 7
 test "PINA: 0x03, Inc to max => PORTC: 0x09, state: waitInc"
 setPINA 0x03
 continue 5
@@ -262,6 +268,7 @@ continue 5
 expectPORTC 0x09
 expect state wait
 checkResult
+
 
 #test “cntA0 > 100 => PORTB: 0x0F”
 #set exampleTick::cntA0 = 101

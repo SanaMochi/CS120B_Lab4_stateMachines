@@ -12,7 +12,7 @@
 #include "simAVRHeader.h"
 #endif
 
-enum States {start, Init, waitRise1, switch1, waitFall1, waitRise2, switch2, waitFall2} state;
+enum States {start, Init, wait, dec, waitDec, inc, waitInc, reset, waitReset} state;
 
       unsigned char tmpA;
 
@@ -20,66 +20,67 @@ void Tick() {
 	switch(state) {
 		case start:
 			state = Init;
-//			PORTB = 0x01;
 			break;
 		case Init:
-			state = waitRise1;
-//			PORTB = 0x01;
+			state = wait;
+			PORTC = 0x07;
 			break;
-		case waitRise1:
-			if (!tmpA)
-				state = waitRise1;
-			else if (tmpA == 0x01)
-				state = switch1;
+		case wait:
+			if (tmpA == 0x00) {	 state = wait;}
+			else if (tmpA == 0x01) { state = inc;}
+			else if (tmpA == 0x02) { state = dec;}
+			else 		       {  state = reset;}
 			break;
-		case switch1:
-//			PORTB = 0x02;
-			state = waitFall1;
+		case dec:
+//			if (PORTC == 0x00) { PORTC = 0x00;}
+//			else {		     PORTC--;}
+			state = waitDec;
 			break;
-		case waitFall1:
-			if (tmpA == 0x01)
-				state = waitFall1;
-			else if (!tmpA)
-				state = waitRise2;
+		case waitDec:
+			if (tmpA == 0x02) {	 state = waitDec;}
+			else if (tmpA == 0x03) { state = reset;}
+			else {			 state = wait;}
 			break;
-		case waitRise2:
-			if (!tmpA)
-                                state = waitRise2;
-                        else if (tmpA == 0x01)
-                                state = switch2;
+		case inc:
+//			if (PORTC == 0x09) { PORTC = 0x09;}
+//			else { 		     PORTC++;}
+			state = waitInc;
+			break;
+		case waitInc:
+			if (tmpA == 0x01) {	 state = waitInc;}
+                        else if (tmpA == 0x03) { state = reset;}
+			else { 			 state = wait;}
                         break;
-		case switch2:
-//			PORTB = 0x01;
-			state = waitFall2;
+		case reset:
+//			PORTC = 0x00;
+			state = waitReset;
 			break;
-		case waitFall2:
-			if (tmpA == 0x01)
-                                state = waitFall2;
-                        else
-                                state = waitRise1;
+		case waitReset:
+			if (tmpA == 0x03) { state = waitReset;}
+			else {		    state = wait;}
                         break;
 		default:
-			PORTB = 0x01;
+			PORTC = 0x07;
 			state = start;
 			break;
 	};
 	switch(state) {
-		case start:	PORTB = 0x01;	break;
-		case Init:	PORTB = 0x01;	break;
-		case waitRise1:			break;
-		case switch1:	PORTB = 0x02;	break;
-		case waitFall1:			break;
-		case waitRise2:			break;
-		case switch2:	PORTB = 0x01;	break;
-		case waitFall2:			break;
-		default:			break;
+		case Init:	/* PORTC = 0x07;*/		break;
+		case wait:					break;
+		case dec:	if (PORTC != 0x00) {PORTC--;}	break;
+		case waitDec:					break;
+		case inc:	if (PORTC != 0x09) {PORTC++;}	break;
+		case waitInc:					break;
+		case reset:	PORTC = 0x00;			break;
+		case waitReset:					break;
+		default:	/*PORTC = 0x07;	*/		break;
 	};
 }
 
 int main(void) {
     /* Insert DDR and PORT initializations */
 	DDRA = 0x00; PORTA = 0xFF; //PORTA = input
-	DDRB = 0xFF; PORTB = 0x00; //PORTB = output
+	DDRC = 0xFF; PORTC = 0x00; //PORTB = output
 
 	state = start;
     while (1) {
@@ -87,5 +88,5 @@ int main(void) {
 	Tick();	
 
     }
-    return 1;
-    }
+//    return 1;
+}
