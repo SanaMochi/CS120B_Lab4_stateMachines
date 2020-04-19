@@ -38,8 +38,7 @@ echo Running all tests..."\n\n
 # Check pass/fail
 #checkResult
 
-# Add tests below
-#Test 1
+# Test 1
 test "Test Correct Combo"
 set state = Init
 setPINA 0x00
@@ -66,6 +65,7 @@ setPINA 0x00
 continue 5
 expect state wait
 checkResult
+
 
 # Test 2
 test "# then incorrect button"
@@ -102,7 +102,9 @@ expectPORTB 0x00
 setPINA 0x00
 continue 5
 expect state wait
+expectPORTB 0x00
 checkResult
+
 
 # Test 4
 test "Incorrect combo: PINA: 0x01 => PORTB: 0"
@@ -131,6 +133,7 @@ expect state wait
 expectPORTB 0x00
 checkResult
 
+
 # Test 5
 test "Unlock"
 set state = Init
@@ -146,14 +149,6 @@ expect state waitFallY
 expectPORTB 0x01
 checkResult
 
-#test “cntA0 > 100 => PORTB: 0x0F”
-#set exampleTick::cntA0 = 101
-#set state = pressA1
-#setPINA 0x02
-#continue 2
-#expectPORTB 0x0F
-#expect state pressA1
-#checkResult
 
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
