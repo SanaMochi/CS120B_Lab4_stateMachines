@@ -40,112 +40,92 @@ echo Running all tests..."\n\n
 
 # Add tests below
 #Test 1
-test "Test Correct Combo"
+test "Full round with all paths tested => PORTB: 2, state: waitFall1"
 set state = Init
 setPINA 0x00
 continue 5
-expect state wait
-setPINA 0x04
+expect state waitRise1
+setPINA 0x01
 continue 5
-expect state waitFall
-setPINA 0x05
+expect state waitFall1
+expectPORTB 0x02
+setPINA 0x01
 continue 5
-expect state waitFall
+expect state waitFall1
 setPINA 0x00
-continue 5
-expect state waitRise
-setPINA 0x02
 continue 5 
-expect state waitFallY
-expectPORTB 0x01
-setPINA 0x03
-continue 5
-expect state waitFallY
-expectPORTB 0x01
+expect state waitRise2
 setPINA 0x00
 continue 5
-expect state wait
+expect state waitRise2
+setPINA 0x01
+continue 5
+expect state waitFall2
+expectPORTB 0x01
+setPINA 0x01
+continue 5
+expect state waitFall2
+setPINA 0x00
+continue 5
+expect state waitRise1
+setPINA 0x00
+continue 5
+expect state waitRise1
+setPINA 0x01
+continue 5
+expect state waitFall1
+expectPORTB 0x02
 checkResult
 
 #Test 2
-test "# then incorrect button"
+test "PINA: 0x01 => PORTB: 2, state: waitRise2"
 set state = Init
-#expectPORTB 0x00
-setPINA 0x04
-continue 5
-expectPORTB 0x00
-expect state waitFall
-setPINA 0x00
-continue 5
-expect state waitRise
-expectPORTB 0x00
 setPINA 0x01
 continue 5
-expect state waitFallY
-expectPORTB 0x00
-setPINA 0x00
-continue 5
-expect state wait
-expectPORTB 0x00
+expect state waitFall1
+expectPORTB 0x02
 checkResult
 
 #Test 3
-test "Lock from inside: PINA: 0x80 => PORTB: 0"
-set state = Init
-setPINA 0x80
-continue 5
-expect state waitFallLock
-expectPORTB 0x00
-setPINA 0x80
-continue 5
-expect state waitFallLock
-expectPORTB 0x00
-setPINA 0x00
-continue 5
-expect state wait
-checkResult
-
-# Test 4
-test "Incorrect combo: PINA: 0x01 => PORTB: 0"
+test "PINA: 0x01, 0x00, 0x01 => PORTB: 2, state: waitFall1"
 set state = Init
 setPINA 0x01
 continue 5
-expect state waitFallFalse
-setPINA 0x03
-continue 5
-expect state waitFallFalse
+expectPORTB 0x02
+expect state waitFall1
 setPINA 0x00
 continue 5
-expect state waitRiseFalse
-setPINA 0x05
+expect state waitRise2
+setPINA 0x01
 continue 5
-expect state waitRiseFalse
-setPINA 0x02
-continue 5
-expect state waitFallFalse2
-setPINA 0x06
-continue 5
-expect state waitFallFalse2
+expectPORTB 0x01
+expect state waitFall2
 setPINA 0x00
 continue 5
-expect state wait
-expectPORTB 0x00
+expect state waitRise1
+setPINA 0x00
+continue 5
+expectPORTB 0x01
+expect state waitRise1
+setPINA 0x00
+continue 5
+expectPORTB 0x01
+expect state waitRise1
+setPINA 0x00
+continue 5
+expectPORTB 0x01
+expect state waitRise1
+setPINA 0x00
+continue 5
+expectPORTB 0x01
+expect state waitRise1
+setPINA 0x01
+continue 5
+expectPORTB 0x02
+expect state waitFall1
 checkResult
 
-#Test 5
-test "Unlock"
-set state = Init
-setPINA 0x04
-continue 5
-expect state waitFall
-setPINA 0x00
-continue 5
-expect state waitRise
-setPINA 0x02
-continue 5
-expect state waitFallY
-expectPORTB 0x01
-checkResult
+
 
 #test “cntA0 > 100 => PORTB: 0x0F”
 #set exampleTick::cntA0 = 101
