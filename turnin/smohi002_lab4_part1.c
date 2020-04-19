@@ -1,7 +1,7 @@
 /*	Author: smohi002
  *  Partner(s) Name: 
  *	Lab Section:25
- *	Assignment: Lab #4  Exercise #1
+ *	Assignment: Lab #4  Exercise #3
  *	Exercise Description: [optional - include for your own benefit]
  *
  *	I acknowledge all content contained herein, excluding template or example
@@ -20,11 +20,11 @@ void Tick() {
 	switch(state) {
 		case start:
 			state = Init;
-			PORTB = 0x01;
+//			PORTB = 0x01;
 			break;
 		case Init:
 			state = waitRise1;
-			PORTB = 0x01;
+//			PORTB = 0x01;
 			break;
 		case waitRise1:
 			if (!tmpA)
@@ -33,7 +33,7 @@ void Tick() {
 				state = switch1;
 			break;
 		case switch1:
-			PORTB = 0x02;
+//			PORTB = 0x02;
 			state = waitFall1;
 			break;
 		case waitFall1:
@@ -49,7 +49,7 @@ void Tick() {
                                 state = switch2;
                         break;
 		case switch2:
-			PORTB = 0x01;
+//			PORTB = 0x01;
 			state = waitFall2;
 			break;
 		case waitFall2:
@@ -64,14 +64,15 @@ void Tick() {
 			break;
 	};
 	switch(state) {
-		case Init:	break;
-		case waitRise1:	break;
-		case switch1:	break;
-		case waitFall1:	break;
-		case waitRise2:	break;
-		case switch2:	break;
-		case waitFall2:	break;
-		default:	break;
+		case start:	PORTB = 0x01;	break;
+		case Init:	PORTB = 0x01;	break;
+		case waitRise1:			break;
+		case switch1:	PORTB = 0x02;	break;
+		case waitFall1:			break;
+		case waitRise2:			break;
+		case switch2:	PORTB = 0x01;	break;
+		case waitFall2:			break;
+		default:			break;
 	};
 }
 
@@ -86,5 +87,5 @@ int main(void) {
 	Tick();	
 
     }
-//    return 1;
-}
+    return 1;
+    }

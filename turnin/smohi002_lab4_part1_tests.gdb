@@ -39,7 +39,7 @@ echo Running all tests..."\n\n
 #checkResult
 
 # Add tests below
-# Test sequence from Init: A0, !A0, A0 => PORTB: 1
+#Test 1
 test "Full round with all paths tested => PORTB: 2, state: waitFall1"
 set state = Init
 setPINA 0x00
@@ -77,7 +77,7 @@ expect state waitFall1
 expectPORTB 0x02
 checkResult
 
-# Test sequence from Init: !A0, A0, !A0 => PORTB: 2
+#Test 2
 test "PINA: 0x01 => PORTB: 2, state: waitRise2"
 set state = Init
 setPINA 0x01
@@ -86,7 +86,7 @@ expect state waitFall1
 expectPORTB 0x02
 checkResult
 
-# Test sequence from Init: A0, A0, A0 => PORTB: 2
+#Test 3
 test "PINA: 0x01, 0x00, 0x01 => PORTB: 2, state: waitFall1"
 set state = Init
 setPINA 0x01
@@ -124,6 +124,8 @@ continue 5
 expectPORTB 0x02
 expect state waitFall1
 checkResult
+
+
 
 #test “cntA0 > 100 => PORTB: 0x0F”
 #set exampleTick::cntA0 = 101
