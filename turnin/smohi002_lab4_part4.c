@@ -7,6 +7,8 @@
  *	I acknowledge all content contained herein, excluding template or example
  *	code, is my own original work.
  */
+
+
 #include <avr/io.h>
 #ifdef _SIMULATE_
 #include "simAVRHeader.h"
@@ -32,10 +34,12 @@ void Tick() {
 			break;
 		case waitFall:
 			if (tmpA == 0x00) {	 state = waitRise;}
+			else if (tmpA == 0x80) { state = lock;}
 			else {			 state = waitFall;}
 			break;
 		case waitRise:
 			if (tmpA == 0x02) {			 state = y;}
+			else if (tmpA == 0x80) {		 state = lock;}
 			else if (tmpA == 0x04 || tmpA == 0x01) { state = wait;}
 			else {					 state = waitRise;}
 			break;
@@ -43,8 +47,9 @@ void Tick() {
 			state = waitFallY;
 			break;
 		case waitFallY:
-			if (tmpA == 0x00) { state = wait;}
-			else {	     state = waitFallY;}
+			if (tmpA == 0x00) {	 state = wait;}
+			else if (tmpA == 0x80) { state = lock;}
+			else {			 state = waitFallY;}
 			break;
 		case lock:
 			state = waitFallLock;
@@ -54,7 +59,6 @@ void Tick() {
 			else {		    state = waitFallLock;}
                         break;
 		default:
-			PORTB = 0x00;
 			state = start;
 			break;
 	};
@@ -64,11 +68,12 @@ void Tick() {
 		case wait:			break;
 		case waitFall:			break;
 		case waitRise:			break;
-		case y:	
+		case y:
 			if (!PORTB) {PORTB = 0x01;}
                         else {PORTB = 0x00;}	break;
 		case waitFallY:			break;
-		case lock:	PORTB = 0x00;	break;
+		case lock:
+			PORTB = 0x00;		break;
 		case waitFallLock:		break;
 		default:			break;
 	};
@@ -78,13 +83,11 @@ int main(void) {
     /* Insert DDR and PORT initializations */
 	DDRA = 0x00; PORTA = 0xFF; //PORTA = input
 	DDRB = 0xFF; PORTB = 0x00; //PORTB = output = 0
-	DDRC = 0xFF; PORTC = 0x00; //PORTC = output = 0
 
 	state = start;
     while (1) {
 	tmpA = PINA;
 	Tick();	
-	PORTC = state;
     }
 //    return 1;
 }
