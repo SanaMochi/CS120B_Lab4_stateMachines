@@ -42,9 +42,9 @@ void Tick() {
 			}
 			break;
 		case waitFall:
-			if (tmpA == 0x00 && cnt < 0x04) {			 state = waitRise;}
+			if (tmpA == 0x00 && cnt < 0x03) {			 state = waitRise;}
 			else if (tmpA == 0x80) {				 state = lock;}
-			else if (tmpA == 0x00 && cnt >= 0x04)  {		 state = unlock;}
+			else if (tmpA == 0x00 && cnt >= 0x03)  {		 state = unlock;}
 			else {							 state = waitFall;}
 			break;
 		case waitRise:
@@ -85,7 +85,8 @@ void Tick() {
                        		else 
 					PORTB = 0x00;
 			}				break;
-		case lock:	PORTB = 0x00;		break;
+		case lock:
+			PORTB = 0x00;			break;
 		case waitFallLock:			break;
 		default:				break;
 	};
