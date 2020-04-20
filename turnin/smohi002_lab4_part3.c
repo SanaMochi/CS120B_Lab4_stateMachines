@@ -12,7 +12,7 @@
 #include "simAVRHeader.h"
 #endif
 
-enum States {start, Init, wait, waitFall, waitRise, y, waitFallY, lock, waitFallLock, waitFallFalse, waitRiseFalse, waitFallFalse2} state;
+enum States {start, Init, wait, waitFall, waitRise, y, waitFallY, lock, waitFallLock} state;//, waitFallFalse, waitRiseFalse, waitFallFalse2} state;
 
       unsigned char tmpA;
 
@@ -28,7 +28,7 @@ void Tick() {
 		case wait:
 			if (tmpA == 0x04) {			   state = waitFall;}
 			else if (tmpA == 0x80) {		   state = lock;}
-			else if ((tmpA == 0x02) || tmpA == 0x01) { state = waitFallFalse;}
+//			else if ((tmpA == 0x02) || tmpA == 0x01) { state = waitFallFalse;}
 			else {					   state = wait;}
 			break;
 		case waitFall:
@@ -41,33 +41,31 @@ void Tick() {
 			else {					 state = waitRise;}
 			break;
 		case y:
-/*			PORTB = 0x01;
-*/			state = waitFallY;
+			state = waitFallY;
 			break;
 		case waitFallY:
 			if (tmpA == 0x00) {  state = wait;}
 			else {		     state = waitFallY;}
 			break;
 		case lock:
-/*			PORTB = 0x00;
-*/			state = waitFallLock;
+			state = waitFallLock;
 			break;
 		case waitFallLock:
 			if (tmpA == 0x00) { state = wait;}
 			else {		    state = waitFallLock;}
                         break;
-		case waitFallFalse:
-			if (tmpA == 0x00) { state = waitRiseFalse;}
-			else {		    state = waitFallFalse;}
-			break;
-		case waitRiseFalse:
-			if (tmpA == 0x04 || tmpA == 0x02 || tmpA == 0x01) { state = waitFallFalse2;}
-			else {						    state = waitRiseFalse;}
-			break;
-		case waitFallFalse2:
-			if (tmpA == 0x00) { state = wait;}
-			else {		    state = waitFallFalse2;}
-			break;
+//		case waitFallFalse:
+//			if (tmpA == 0x00) { state = waitRiseFalse;}
+//			else {		    state = waitFallFalse;}
+//			break;
+//		case waitRiseFalse:
+//			if (tmpA == 0x04 || tmpA == 0x02 || tmpA == 0x01) { state = waitFallFalse2;}
+//			else {						    state = waitRiseFalse;}
+//			break;
+//		case waitFallFalse2:
+//			if (tmpA == 0x00) { state = wait;}
+//			else {		    state = waitFallFalse2;}
+//			break;
 		default:
 			PORTB = 0x00;
 			state = start;
@@ -79,13 +77,15 @@ void Tick() {
 		case wait:			break;
 		case waitFall:			break;
 		case waitRise:			break;
-		case y:		PORTB = 0x01;	break;
+		case y:
+			PORTB = 0x01;		break;
 		case waitFallY:			break;
-		case lock:	PORTB = 0x00;	break;
+		case lock:	
+			PORTB = 0x00;		break;
 		case waitFallLock:		break;
-		case waitFallFalse:		break;
-		case waitRiseFalse:		break;
-		case waitFallFalse2:		break;
+//		case waitFallFalse:		break;
+//		case waitRiseFalse:		break;
+//		case waitFallFalse2:		break;
 		default:			break;
 	};
 }

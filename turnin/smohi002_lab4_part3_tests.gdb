@@ -66,7 +66,6 @@ continue 5
 expect state wait
 checkResult
 
-
 # Test 2
 test "# then incorrect button"
 set state = Init
@@ -105,34 +104,26 @@ expect state wait
 expectPORTB 0x00
 checkResult
 
-
 # Test 4
 test "Incorrect combo: PINA: 0x01 => PORTB: 0"
 set state = Init
 setPINA 0x01
 continue 5
-expect state waitFallFalse
-setPINA 0x03
+expect state wait
+setPINA 0x04
 continue 5
-expect state waitFallFalse
+expect state waitFall
 setPINA 0x00
 continue 5
-expect state waitRiseFalse
-setPINA 0x05
+expect state waitRise
+setPINA 0x01
 continue 5
-expect state waitRiseFalse
-setPINA 0x02
-continue 5
-expect state waitFallFalse2
-setPINA 0x06
-continue 5
-expect state waitFallFalse2
+expect state waitFallY
 setPINA 0x00
 continue 5
 expect state wait
 expectPORTB 0x00
 checkResult
-
 
 # Test 5
 test "Unlock"
@@ -149,8 +140,7 @@ expect state waitFallY
 expectPORTB 0x01
 checkResult
 
-
-# Report on how many tests passed/tests ran
+#Report on how many tests passed/tests ran
 set $passed=$tests-$failed
 eval "shell echo Passed %d/%d tests.\n",$passed,$tests
 echo ======================================================\n

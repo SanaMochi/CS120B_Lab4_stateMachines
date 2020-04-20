@@ -39,50 +39,35 @@ echo Running all tests..."\n\n
 #checkResult
 
 # Test 1
-test "Test Correct Combo and all branches"
+test "Test Correct Combo"
 set state = Init
-
 setPINA 0x00
 continue 5
 expect state wait
-
 setPINA 0x04
 continue 5
 expect state waitFall
-#expectPORTC 0x04
 setPINA 0x05
 continue 5
 expect state waitFall
 setPINA 0x00
 continue 5
 expect state waitRise
-setPINA 0x01
-continue 5
-expect state waitFall
-setPINA 0x00
-continue 5
-expect state waitRise
 setPINA 0x02
-continue 5
-expect state waitFall
-setPINA 0x00
-continue 5
-expect state waitRise
-setPINA 0x01
-continue 5
-expect state waitFall
+continue 5 
+expect state waitFallY
+expectPORTB 0x01
 setPINA 0x03
 continue 5
-expect state waitFall
+expect state waitFallY
+expectPORTB 0x01
 setPINA 0x00
 continue 5
 expect state wait
-expectPORTB 0x01
 checkResult
 
-
 # Test 2
-test "# XXX"
+test "# then incorrect button"
 set state = Init
 setPINA 0x04
 continue 5
@@ -94,21 +79,7 @@ expect state waitRise
 expectPORTB 0x00
 setPINA 0x01
 continue 5
-expect state waitFall
-expectPORTB 0x00
-setPINA 0x00
-continue 5
-expect state waitRise
-setPINA 0x01
-continue 5
-expect state waitFall
-expectPORTB 0x00
-setPINA 0x00
-continue 5
-expect state waitRise
-setPINA 0x01
-continue 5
-expect state waitFall
+expect state waitFallY
 expectPORTB 0x00
 setPINA 0x00
 continue 5
@@ -133,26 +104,13 @@ expect state wait
 expectPORTB 0x00
 checkResult
 
-
 # Test 4
-test "Incorrect combo: XYXY"
+test "Incorrect combo: PINA: 0x01 => PORTB: 0"
 set state = Init
 setPINA 0x01
 continue 5
-expect state waitFall
-setPINA 0x03
-continue 5
-expect state waitFall
-setPINA 0x00
-continue 5
-expect state waitRise
-setPINA 0x05
-continue 5
-expect state waitRise
-setPINA 0x02
-continue 5
-expect state waitFall
-setPINA 0x06
+expect state wait
+setPINA 0x04
 continue 5
 expect state waitFall
 setPINA 0x00
@@ -160,46 +118,17 @@ continue 5
 expect state waitRise
 setPINA 0x01
 continue 5
-expect state waitFall
-expectPORTB 0x00
-setPINA 0x00
-continue 5
-expect state waitRise
-setPINA 0x02
-continue 5
-expect state waitFall
-expectPORTB 0x00
+expect state waitFallY
 setPINA 0x00
 continue 5
 expect state wait
 expectPORTB 0x00
 checkResult
-
 
 # Test 5
 test "Unlock"
 set state = Init
-set state = Init
-setPINA 0x80
-continue 5
-expect state waitFallLock
-expectPORTB 0x00
-setPINA 0x80
-continue 5
-expect state waitFallLock
-expectPORTB 0x00
-setPINA 0x00
-continue 5
-expect state wait
-expectPORTB 0x00
-
 setPINA 0x04
-continue 5
-expect state waitFall
-setPINA 0x00
-continue 5
-expect state waitRise
-setPINA 0x01
 continue 5
 expect state waitFall
 setPINA 0x00
@@ -207,74 +136,11 @@ continue 5
 expect state waitRise
 setPINA 0x02
 continue 5
-expect state waitFall
-setPINA 0x00
-continue 5
-expect state waitRise
-setPINA 0x01
-continue 5
-expect state waitFall
-expectPORTB 0x00
-checkResult
-
-# Test 6
-test "Lock & Unlock"
-set state = Init
-setPINA 0x04
-continue 5
-expect state waitFall
-setPINA 0x00
-continue 5
-expect state waitRise
-setPINA 0x01
-continue 5
-expect state waitFall
-setPINA 0x00
-continue 5
-expect state waitRise
-setPINA 0x02
-continue 5
-expect state waitFall
-setPINA 0x00
-continue 5
-expect state waitRise
-setPINA 0x01
-continue 5
-expect state waitFall
-setPINA 0x00
-continue 5
-expect state wait
+expect state waitFallY
 expectPORTB 0x01
-
-setPINA 0x04
-continue 5
-expect state waitFall
-setPINA 0x00
-continue 5
-expect state waitRise
-setPINA 0x01
-continue 5
-expect state waitFall
-setPINA 0x00
-continue 5
-expect state waitRise
-setPINA 0x02
-continue 5
-expect state waitFall
-setPINA 0x00
-continue 5
-expect state waitRise
-setPINA 0x01
-continue 5
-expect state waitFall
-setPINA 0x00
-continue 5
-expect state wait
-expectPORTB 0x00
 checkResult
 
-
-# Report on how many tests passed/tests ran
+#Report on how many tests passed/tests ran
 set $passed=$tests-$failed
 eval "shell echo Passed %d/%d tests.\n",$passed,$tests
 echo ======================================================\n

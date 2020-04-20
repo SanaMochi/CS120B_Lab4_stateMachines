@@ -1,7 +1,7 @@
-Breakpoint 1 at 0x2ea: file source/main.c, line 106.
+Breakpoint 1 at 0x26e: file source/main.c, line 100.
 Note: automatically using hardware breakpoints for read-only addresses.
 ======================================================
 Running all tests..."
 
-"Test Correct Combo and all branches"..."# XXX"..."Lock from inside: PINA: 0x80 => PORTB: 0"..."Incorrect combo: XYXY"..."Unlock"..."Lock & Unlock"...======================================================
+"Test Correct Combo"..."# then incorrect button"..."Lock from inside: PINA: 0x80 => PORTB: 0"..."Incorrect combo: PINA: 0x01 => PORTB: 0"..."Unlock"...======================================================
 Quitting: Remote doesn't know how to detach
