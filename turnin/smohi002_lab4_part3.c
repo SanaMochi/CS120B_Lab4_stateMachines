@@ -12,7 +12,7 @@
 #include "simAVRHeader.h"
 #endif
 
-enum States {start, Init, wait, waitFall, waitRise, y, waitFallY, lock, waitFallLock} state;//, waitFallFalse, waitRiseFalse, waitFallFalse2} state;
+enum States {start, Init, wait, waitFall, waitRise, y, waitFallY, lock, waitFallLock} state;
 
       unsigned char tmpA;
 
@@ -36,7 +36,7 @@ void Tick() {
 			break;
 		case waitRise:
 			if (tmpA == 0x02) {			 state = y;}
-			else if (tmpA == 0x08) {		 state = lock;}
+			else if (tmpA == 0x80) {		 state = lock;}
 			else if (tmpA == 0x04 || tmpA == 0x01) { state = waitFallY;}
 			else {					 state = waitRise;}
 			break;
