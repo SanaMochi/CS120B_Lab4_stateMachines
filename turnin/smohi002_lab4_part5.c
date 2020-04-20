@@ -15,7 +15,7 @@
 enum States {start, Init, wait, waitFall, waitRise, unlock, lock, waitFallLock} state;
 
 	unsigned char tmpA;
-	unsigned char B;
+	unsigned char tmpB;
 	unsigned char prevA = 0x00;
 	unsigned char cnt = 0x00;
 	unsigned char passcode[4];
@@ -32,8 +32,8 @@ void Tick() {
 			break;
 		case wait:
 			if (tmpA == 0x04 || tmpA == 0x02 || tmpA == 0x01) {
-				passcode[0] = tmpA;
-				cnt = 0x01;
+//				passcode[0] = tmpA;
+//				cnt = 0x01;
 				state = waitFall;
 			}
 			else if (tmpA == 0x80) {
@@ -49,7 +49,7 @@ void Tick() {
 			else {							 state = waitFall;}
 			break;
 		case waitRise:
-			if (tmpA == 0x01 || tmpA == 0x02 || tmpA == 0x04) {
+			if (tmpA == 0x04 || tmpA == 0x02 || tmpA == 0x01) {
 				state = waitFall;
 				if (tmpA != prevA)	flag = 0x01;
 			}
@@ -74,13 +74,17 @@ void Tick() {
         switch(state) {
                 case start:             	        break;
                 case Init:              	        break;
-                case wait:          	        	break;
+                case wait:    				
+			if (cnt < 0x04 && (tmpA == 0x01 || tmpA == 0x02 || tmpA == 0x04)) {
+				passcode[cnt] = tmpA;
+				cnt = 0x01;
+				flag = 0;
+			}				break;
                 case waitFall: 
 			if (flag == 0x01 && cnt < 0x04 && (tmpA == 0x01 || tmpA == 0x02 || tmpA == 0x04)) {
                                 passcode[cnt] = tmpA;
                                 cnt++;
 				flag = 0;
-				PORTC = passcode[cnt - 1];
                         }	    	        	break;
                 case waitRise:				break;
 		case unlock:
@@ -88,7 +92,7 @@ void Tick() {
 			    passcode[1] == 0x01 &&
 			    passcode[2] == 0x02 &&
 			    passcode[3] == 0x01 ) {
-				if (B == 0x00) 
+				if (tmpB == 0x00) 
 					PORTB = 0x01;
                        		else 
 					PORTB = 0x00;
@@ -108,7 +112,7 @@ int main(void) {
 	state = start;
     while (1) {
 	tmpA = PINA;
-	B = PORTB;
+	tmpB = PORTB;
 	Tick();	
 //	PORTC = state;
 	prevA = tmpA;
