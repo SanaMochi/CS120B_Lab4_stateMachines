@@ -74,11 +74,10 @@ void Tick() {
         switch(state) {
                 case start:             	        break;
                 case Init:              	        break;
-                case wait:    				
-			if (cnt < 0x04 && (tmpA == 0x01 || tmpA == 0x02 || tmpA == 0x04)) {
-				passcode[cnt] = tmpA;
+                case wait:  
+			if ((tmpA == 0x01 || tmpA == 0x02 || tmpA == 0x04)) {
 				cnt = 0x01;
-				flag = 0;
+				passcode[cnt - 1] = tmpA;
 			}				break;
                 case waitFall: 
 			if (flag == 0x01 && cnt < 0x04 && (tmpA == 0x01 || tmpA == 0x02 || tmpA == 0x04)) {
