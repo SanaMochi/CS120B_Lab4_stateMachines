@@ -20,6 +20,7 @@ enum States {start, Init, wait, waitFall, waitRise, unlock, lock, waitFallLock} 
 	unsigned char cnt = 0x00;
 	unsigned char passcode[4];
 	unsigned char flag = 0x00;
+	unsigned char flag2 = 0x00;
 
 void Tick() {
 	switch(state) {
@@ -76,8 +77,7 @@ void Tick() {
                 case Init:              	        break;
                 case wait:  
 			if ((tmpA == 0x01 || tmpA == 0x02 || tmpA == 0x04)) {
-				cnt = 0x01;
-				passcode[cnt - 1] = tmpA;
+				flag2 = 0x01;
 			}				break;
                 case waitFall: 
 			if (flag == 0x01 && cnt < 0x04 && (tmpA == 0x01 || tmpA == 0x02 || tmpA == 0x04)) {
@@ -87,7 +87,7 @@ void Tick() {
                         }	    	        	break;
                 case waitRise:				break;
 		case unlock:
-			if (passcode[0] == 0x04 && 
+			if (flag2 == 0x01 && 
 			    passcode[1] == 0x01 &&
 			    passcode[2] == 0x02 &&
 			    passcode[3] == 0x01 ) {
