@@ -41,6 +41,7 @@ void Tick() {
 			else {					 state = waitRise;}
 			break;
 		case y:
+			PORTB = 0x01;
 			state = waitFallY;
 			break;
 		case waitFallY:
@@ -48,6 +49,7 @@ void Tick() {
 			else {		     state = waitFallY;}
 			break;
 		case lock:
+			PORTB = 0x00;
 			state = waitFallLock;
 			break;
 		case waitFallLock:
@@ -65,11 +67,11 @@ void Tick() {
 		case wait:			break;
 		case waitFall:			break;
 		case waitRise:			break;
-		case y:
-			PORTB = 0x01;		break;
+		case y:				break;
+//			PORTB = 0x01;		break;
 		case waitFallY:			break;
-		case lock:	
-			PORTB = 0x00;		break;
+		case lock:			break;
+//			PORTB = 0x00;		break;
 		case waitFallLock:		break;
 		default:			break;
 	};
@@ -79,13 +81,11 @@ int main(void) {
     /* Insert DDR and PORT initializations */
 	DDRA = 0x00; PORTA = 0xFF; //PORTA = input
 	DDRB = 0xFF; PORTB = 0x00; //PORTB = output = 0
-	DDRC = 0xFF; PORTC = 0x00; //PORTC = output = 0
 
 	state = start;
     while (1) {
 	tmpA = PINA;
 	Tick();	
-	PORTC = state;
     }
 //    return 1;
 }
