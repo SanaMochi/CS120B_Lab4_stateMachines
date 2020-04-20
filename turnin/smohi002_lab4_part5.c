@@ -15,6 +15,7 @@
 enum States {start, Init, wait, waitFall, waitRise, unlock, lock, waitFallLock} state;
 
 	unsigned char tmpA;
+	unsigned char B;
 	unsigned char prevA = 0x00;
 	unsigned char cnt = 0x00;
 	unsigned char passcode[4];
@@ -87,8 +88,10 @@ void Tick() {
 			    passcode[1] == 0x01 &&
 			    passcode[2] == 0x02 &&
 			    passcode[3] == 0x01 ) {
-				if (PORTB == 0x00) PORTB = 0x01;
-                       		else PORTB = 0x00;
+				if (B == 0x00) 
+					PORTB = 0x01;
+                       		else 
+					PORTB = 0x00;
 			}				break;
 		case lock:	PORTB = 0x00;		break;
 		case waitFallLock:			break;
@@ -105,6 +108,7 @@ int main(void) {
 	state = start;
     while (1) {
 	tmpA = PINA;
+	B = PORTB;
 	Tick();	
 //	PORTC = state;
 	prevA = tmpA;
