@@ -18,9 +18,8 @@ enum States {start, Init, wait, waitFall, waitRise, unlock, lock, waitFallLock} 
 	unsigned char tmpB;
 	unsigned char prevA = 0x00;
 	unsigned char cnt = 0x00;
-	unsigned char passcode[4];
+	unsigned char passcode[3];
 	unsigned char flag = 0x00;
-	unsigned char flag2 = 0x00;
 
 void Tick() {
 	switch(state) {
@@ -32,9 +31,7 @@ void Tick() {
 			state = wait;
 			break;
 		case wait:
-			if (tmpA == 0x04 || tmpA == 0x02 || tmpA == 0x01) {
-//				passcode[0] = tmpA;
-//				cnt = 0x01;
+			if (tmpA == 0x04) {
 				state = waitFall;
 			}
 			else if (tmpA == 0x80) {
@@ -46,11 +43,12 @@ void Tick() {
 			break;
 		case waitFall:
 			if (tmpA == 0x00 && cnt < 0x04) {			 state = waitRise;}
+			else if (tmpA == 0x80) {				 state = lock;}
 			else if (tmpA == 0x00 && cnt >= 0x04)  {		 state = unlock;}
 			else {							 state = waitFall;}
 			break;
 		case waitRise:
-			if (tmpA == 0x04 || tmpA == 0x02 || tmpA == 0x01) {
+			if (tmpA == 0x02 || tmpA == 0x01) {
 				state = waitFall;
 				if (tmpA != prevA)	flag = 0x01;
 			}
@@ -75,22 +73,13 @@ void Tick() {
         switch(state) {
                 case start:             	        break;
                 case Init:              	        break;
-                case wait:  
-			if ((tmpA == 0x01 || tmpA == 0x02 || tmpA == 0x04)) {
-				flag2 = 0x01;
-			}				break;
-                case waitFall: 
-			if (flag == 0x01 && cnt < 0x04 && (tmpA == 0x01 || tmpA == 0x02 || tmpA == 0x04)) {
-                                passcode[cnt] = tmpA;
-                                cnt++;
-				flag = 0;
-                        }	    	        	break;
+                case wait:  				break;
+                case waitFall: 				break;
                 case waitRise:				break;
 		case unlock:
-			if (flag2 == 0x01 && 
-			    passcode[1] == 0x01 &&
-			    passcode[2] == 0x02 &&
-			    passcode[3] == 0x01 ) {
+			if (passcode[0] == 0x01 &&
+			    passcode[1] == 0x02 &&
+			    passcode[2] == 0x01 ) {
 				if (tmpB == 0x00) 
 					PORTB = 0x01;
                        		else 
@@ -109,12 +98,14 @@ int main(void) {
 	DDRC = 0xFF; PORTC = 0x00; //PORTC = output = 0
 
 	state = start;
-    while (1) {
-	tmpA = PINA;
-	tmpB = PORTB;
-	Tick();	
-//	PORTC = state;
-	prevA = tmpA;
-    }
-//    return 1;
+	while (1) {
+		tmpA = PINA;
+		tmpB = PORTB;
+		Tick();	
+		prevA = tmpA;
+	}
+    //    return 1;
 }
+
+
+

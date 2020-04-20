@@ -1,7 +1,19 @@
-Breakpoint 1 at 0x26e: file source/main.c, line 100.
+Breakpoint 1 at 0x29c: file source/main.c, line 101.
 Note: automatically using hardware breakpoints for read-only addresses.
 ======================================================
 Running all tests..."
 
-"Test Correct Combo"..."# then incorrect button"..."Lock from inside: PINA: 0x80 => PORTB: 0"..."Incorrect combo: PINA: 0x01 => PORTB: 0"..."Unlock"...======================================================
+"Test Correct Combo and all branches"...
+	Expected wait but got state:4
+	Expected 0x01 
+	PORTB '0x800025:	0x00
+"# XXX"...
+	Expected wait but got state:4"Lock from inside: PINA: 0x80 => PORTB: 0"..."Incorrect combo: #YXY"...
+	Expected wait but got state:4"Unlock"..."Lock & Unlock"...
+	Expected wait but got state:4
+	Expected 0x01 
+	PORTB '0x800025:	0x00
+
+	Expected waitFall but got state:4
+	Expected wait but got state:4======================================================
 Quitting: Remote doesn't know how to detach
